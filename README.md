@@ -1,6 +1,7 @@
-# test
+## Layout do projeto 
 
-A new Flutter project.
+[![Modelo seguido ](https://img.shields.io/badge/modelo_seguido%20-%23323330.svg?&style=for-the-badge&logo=Modelo_seguido&logoColor=black&color=000)](https://codecanyon.net/item/todothings-ios-and-android-todo-app-template-reactnative/screenshots/44478966?index=0)
+
 
 ## Getting Started
 
