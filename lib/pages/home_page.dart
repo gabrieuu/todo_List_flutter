@@ -16,11 +16,14 @@ class HomePage extends StatelessWidget {
     );
   }
   _appBar(){
-    return PreferredSize(
-      preferredSize: Size.fromHeight(0),
-      child: AppBar(
-        elevation: 0,
-      ),
+    return AppBar(
+        title: Text("Task List"),
+        actions: [
+          IconButton(icon: Icon(Icons.add_circle_outline),
+            onPressed: (){
+              
+            },),
+        ]
       );
   }
   _body(){
@@ -28,7 +31,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            const Header(),
+            
             Builder(builder: (context) {
               if(listaItems.isEmpty){
                 return Container(
