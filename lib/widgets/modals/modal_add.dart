@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:test/models/list_items.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
 
 class ShowModal extends StatefulWidget {
-  final String title;
-  final String description;
-  final String priority;
+ 
 
-  const ShowModal({super.key, this.title = '', this.description = '', this.priority = ''});
+  const ShowModal({super.key});
 
   @override
   State<ShowModal> createState() => _ShowModalState();
@@ -16,6 +15,9 @@ class ShowModal extends StatefulWidget {
 class _ShowModalState extends State<ShowModal> {
   
   String dropValue = '';
+  String title = '';
+  String description = '';
+  String priority = '';
 
   List<String> dropdown = [
     "low",
@@ -35,8 +37,8 @@ class _ShowModalState extends State<ShowModal> {
             const Center(
               child: Text("Add Task", style: TextStyle(fontWeight: FontWeight.bold),),
             ),
-            _txtField(label: "Title"),
-            _txtField(label: "Description"),
+            _txtFieldTitle(label: "Title"),
+            _txtFieldDesc(label: "Description"),
             _dropdown(),
             Row(
               
@@ -84,6 +86,56 @@ class _ShowModalState extends State<ShowModal> {
           ),
       ],
     );
+  }  
+  _txtFieldTitle({String label = '', String }){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 10),
+          child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+          )),
+        TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  hintText: label,
+                  labelStyle: const TextStyle(fontSize: 12),
+                  floatingLabelStyle: const TextStyle(color: Colors.red),
+                  floatingLabelAlignment: FloatingLabelAlignment.start,
+                ),
+                onChanged: (resul){
+                  setState(() {
+                    title = resul;
+                  });
+                },
+              ),
+      ],
+    );
+  }
+  _txtFieldDesc({String label = '',}){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 10),
+          child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+          )),
+        TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  hintText: label,
+                  labelStyle: const TextStyle(fontSize: 12),
+                  floatingLabelStyle: const TextStyle(color: Colors.red),
+                  floatingLabelAlignment: FloatingLabelAlignment.start,
+                ),
+                onChanged: (resul){
+                  setState(() {
+                    description = resul;
+                  });
+                },
+              ),
+      ],
+    );
   }
   _buttonBack({String txt = '', Color cor = Colors.black}){
       return ElevatedButton(
@@ -100,33 +152,19 @@ class _ShowModalState extends State<ShowModal> {
   }
   _buttonAdd({String txt = '', Color cor = Colors.black}){
       return ElevatedButton(
-              onPressed: (){}, 
+              onPressed: (){
+               if(title.isNotEmpty && description.isNotEmpty && dropValue.isNotEmpty){
+                 TaskItems task = new TaskItems(title: title, description: description, importance: dropValue);
+                 listaItems.add(task);
+                 Navigator.pop(context);
+               }else{
+                print("erro\nTitle: $title\nDescription: $description\nDropValue: $dropValue");
+               }
+              }, 
               style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Color.fromRGBO(250, 130, 76, 1))
               ),
               child: Text(txt),
             );
-  }
-  _txtField({String label = ''}){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-          )),
-        TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                  hintText: label,
-                  labelStyle: const TextStyle(fontSize: 12),
-                  floatingLabelStyle: const TextStyle(color: Colors.red),
-                  floatingLabelAlignment: FloatingLabelAlignment.start,
-
-
-                ),
-              ),
-      ],
-    );
   }
 }

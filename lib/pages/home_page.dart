@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/models/list_items.dart';
 import 'package:test/util/colors.dart';
 import 'package:test/widgets/header.dart';
 import 'package:test/widgets/tasks_box.dart';
@@ -23,16 +24,24 @@ class HomePage extends StatelessWidget {
       );
   }
   _body(){
-    return SingleChildScrollView(
-      child: Container(
+    return Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: const Column(
+        child: Column(
           children: [
-            Header(),
-            Tasks(),          
+            const Header(),
+            Builder(builder: (context) {
+              if(listaItems.isEmpty){
+                return Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height-130,
+                  child: const Text("Vazio..."),
+                );
+              }else{
+                return const Tasks();
+              }
+            },)      
           ],
         ),
-      ),
     );
   }
   _bottomNav(){
