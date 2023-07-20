@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:test/util/colors.dart';
+import 'package:test/widgets/modals/modal_add.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,11 +20,19 @@ class Header extends StatelessWidget {
               const Text("Add, delete ou mark as done a task",style: TextStyle(fontSize: 10),)
              ],
           ),
-          const Column(
-            children: [
-              Icon(Icons.add_circle_outline,size: 19,),
-              Text("ADD", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),)
-            ],
+          GestureDetector(
+            onTap: (){
+              showModalBottomSheet(
+                context: context, 
+                builder: (context) => ShowModal(),
+                );
+            },
+            child: const Column(
+              children: [
+                Icon(Icons.add_circle_outline,size: 19,),
+                Text("ADD", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),)
+              ],
+            ),
           )
         ],
       ),
