@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test/models/list_items.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
 
@@ -28,11 +27,11 @@ class _ShowModalState extends State<ShowModal> {
   
   @override
   Widget build(BuildContext context) {
-    return  SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(15),
+    return  Container(
+      padding: const EdgeInsets.all(15),
+      child: SingleChildScrollView(
         child: Wrap(
-          runSpacing: 20,
+          runSpacing: 10,
           children: [
             const Center(
               child: Text("Add Task", style: TextStyle(fontWeight: FontWeight.bold),),
@@ -44,15 +43,15 @@ class _ShowModalState extends State<ShowModal> {
               
               children: [
                 Expanded(child: _buttonBack(txt: "CANCEL", cor: backgroundColor),),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Expanded(child: _buttonAdd(txt: "ADD", cor: Colors.orange),)
               ],
             )
             
             
           ],
-          )
-      ),
+          ),
+      )
     );
   }
   _dropdown(){
@@ -87,7 +86,7 @@ class _ShowModalState extends State<ShowModal> {
       ],
     );
   }  
-  _txtFieldTitle({String label = '', String }){
+  _txtFieldTitle({String label = ''}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -154,11 +153,8 @@ class _ShowModalState extends State<ShowModal> {
       return ElevatedButton(
               onPressed: (){
                if(title.isNotEmpty && description.isNotEmpty && dropValue.isNotEmpty){
-                 TaskItems task = new TaskItems(title: title, description: description, importance: dropValue);
-                 listaItems.add(task);
-                 Navigator.pop(context);
-               }else{
-                print("erro\nTitle: $title\nDescription: $description\nDropValue: $dropValue");
+                 TaskItems task = TaskItems(title: title, description: description, importance: dropValue);
+                 Navigator.of(context).pop(task);
                }
               }, 
               style: const ButtonStyle(

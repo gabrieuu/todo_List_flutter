@@ -1,52 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:test/models/list_items.dart';
+import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
-import 'package:test/widgets/header.dart';
+import 'package:test/widgets/modals/modal_add.dart';
 import 'package:test/widgets/tasks_box.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  List<TaskItems> listItems = [];
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: _appBar(),
-      body: _body(),
+      appBar: _appBar(context),
+      body: _body(listItems),
       bottomNavigationBar: _bottomNav(),
     );
   }
-  _appBar(){
+
+  _appBar(BuildContext context){
     return AppBar(
-        title: Text("Task List"),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Task List", style: TextStyle(color: black),),
+            Text("Add, delete or mark as done a task",style: TextStyle(color: black, fontSize: 11),)
+          ],
+        ),
+        elevation: 0.6,
+        backgroundColor: Colors.white,
         actions: [
-          IconButton(icon: Icon(Icons.add_circle_outline),
-            onPressed: (){
+          TextButton(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.add_circle_outline,color: black,),
+                Text("ADD",style: TextStyle(color: black, fontSize: 11),)
+              ],
+            ),
+            onPressed: () async{
+              TaskItems? lista = await showModalBottomSheet<TaskItems>(
+                context: context,                
+                builder: (context) => const ShowModal());   
+                
+                if(lista != null){
+                  setState(() {
+                   listItems.add(lista);
+                  });
+                }
+                
+
+              },
               
-            },),
+            ),
         ]
       );
   }
-  _body(){
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          children: [
-            
-            Builder(builder: (context) {
-              if(listaItems.isEmpty){
-                return Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height-130,
-                  child: const Text("Vazio..."),
-                );
-              }else{
-                return const Tasks();
-              }
-            },)      
-          ],
+
+ _body(List<TaskItems> lista) {
+    if (lista.isEmpty) {
+      return Center(
+        child: Text("vazio"),
+      );
+    } else {
+      return Padding(       
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: lista.length,
+          itemBuilder: (context, index) => Tasks(task: lista[index]),
+          
         ),
-    );
+      );
+    }
   }
+
+  
+
   _bottomNav(){
     return Container(
       height: 70,

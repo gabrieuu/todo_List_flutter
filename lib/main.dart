@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:test/pages/home_page.dart';
-import 'package:test/util/colors.dart';
 
 main() {
   runApp(const MyApp());
