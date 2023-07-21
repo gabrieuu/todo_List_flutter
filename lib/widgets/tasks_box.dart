@@ -29,38 +29,70 @@ class _TasksState extends State<Tasks> {
       
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(task.title,style: const TextStyle(fontWeight: FontWeight.bold),),
-              Text(task.importance, style: TextStyle(fontSize: 9, color: danger, fontWeight: FontWeight.bold),) 
-            ],
-          ),
-          Container(
-            width: 300,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            constraints: const BoxConstraints(
-              maxWidth: 400
-            ),
-            child: Text(task.description,style: const TextStyle(fontSize: 9),)
-            ),
+          _title(title: task.title, importance: task.importance ),
+
+          _description(description: task.description),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Pending", style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: danger),),
-              const Wrap(
-                direction: Axis.horizontal,
-                spacing: 8,
-                children: [
-                  Icon(Icons.check, size: 18,),
-                  Icon(Icons.edit,size: 18,),
-                  Icon(Icons.delete,size: 18,)
-                ],
-              )
+              _icons(),
             ],
           )
         ]
         ),
     );
   }
+
+  _title({required String title, required String importance}){
+    return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title,style: const TextStyle(fontWeight: FontWeight.w400),),
+              Text(importance.toUpperCase(), style: TextStyle(fontSize: 9, color: danger, fontWeight: FontWeight.bold),) 
+            ],
+          );
+  }
+  _description({required String description}){
+    return Container(
+            width: 300,
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            constraints: const BoxConstraints(
+              maxWidth: 400
+            ),
+            child: Text(description,style: const TextStyle(fontSize: 9,fontWeight: FontWeight.w600),)
+            );
+  }
+  
+  _icons(){
+    return Wrap(
+                direction: Axis.horizontal,
+                
+                children: [
+
+                  IconButton(
+                    onPressed: (){}, 
+                    icon: const Icon(Icons.check, size: 18,),
+                    
+                  ),
+                  //Icone de finalizado
+
+                   IconButton(
+                    onPressed: (){}, 
+                    icon: const Icon(Icons.edit, size: 18,)
+                  ),//icone de editar
+
+                   IconButton(
+                    onPressed: (){
+                      
+                    }, 
+                    icon: const Icon(Icons.delete, size: 18,)
+                  ),// icone de deletar
+                  
+                  
+                ],
+              );
+  }
 }
+

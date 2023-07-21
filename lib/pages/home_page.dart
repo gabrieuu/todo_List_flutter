@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
 
  _body(List<TaskItems> lista) {
     if (lista.isEmpty) {
-      return Center(
+      return const Center(
         child: Text("vazio"),
       );
     } else {
