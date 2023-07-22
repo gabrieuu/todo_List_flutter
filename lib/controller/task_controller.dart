@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:test/models/task_items.dart';
+
+class TaskProvider extends ChangeNotifier{
 
 
   List<TaskItems> listaItems = [];
@@ -12,12 +15,14 @@ import 'package:test/models/task_items.dart';
 
       t.setId(1);
       listaItems.add(t);
+      notifyListeners();
 
     } else {
 
       TaskItems last = listaItems[listaItems.length-1];
       t.setId(last.getId()!+1);
       listaItems.add(t);
+      notifyListeners();
 
     }
 
@@ -25,5 +30,8 @@ import 'package:test/models/task_items.dart';
 
   void remover(TaskItems t){
     listaItems.remove(t);
+    notifyListeners();
   }
 
+
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:test/controller/task_controller.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/pages/home_page.dart';
@@ -14,10 +15,13 @@ class Tasks extends StatefulWidget {
 
 class _TasksState extends State<Tasks> {
   
+  late TaskProvider taskProvider;
 
   @override
   Widget build(BuildContext context) {
+
     TaskItems task  = widget.task;
+    taskProvider = Provider.of<TaskProvider>(context);
 
     return Container(
 
@@ -88,7 +92,7 @@ class _TasksState extends State<Tasks> {
                    IconButton(
                     onPressed: (){
                       setState(() {
-                        remover(task);               
+                          taskProvider.remover(task);           
                       });
                     }, 
                     icon: const Icon(Icons.delete, size: 18,)

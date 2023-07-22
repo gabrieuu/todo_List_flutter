@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:test/controller/task_controller.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
@@ -14,19 +15,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  
+  late TaskProvider task;
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context) {   
+    task = Provider.of<TaskProvider>(context); //recebe os valores de TaskProvider
     return Scaffold(
       appBar: _appBar(context),
-      body: _body(listaItems),
+      body: _body(),
       bottomNavigationBar: _bottomNav(),
     );
   }
 
   _appBar(BuildContext context){
+    
     return AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                 
                 if(lista != null){
                   setState(() {
-                   cadastrar(lista);
+                   task.cadastrar(lista);
                   });
                 }
                 
@@ -65,8 +67,9 @@ class _HomePageState extends State<HomePage> {
       );
   }
 
- _body(List<TaskItems> lista) {
-    if (lista.isEmpty) {
+ _body() {   
+
+    if (task.listaItems.isEmpty) {
       return const Center(
         child: Text("vazio"),
       );
@@ -74,9 +77,8 @@ class _HomePageState extends State<HomePage> {
       return Padding(       
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-          itemCount: lista.length,
-          itemBuilder: (context, index) => Tasks(task: lista[index]),
-          
+          itemCount: task.listaItems.length,
+          itemBuilder: (context, index) => Tasks(task: task.listaItems[index]),         
         ),
       );
     }
