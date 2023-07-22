@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/controller/task_controller.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
 import 'package:test/widgets/modals/modal_add.dart';
@@ -13,14 +14,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<TaskItems> listItems = [];
+  
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: _appBar(context),
-      body: _body(listItems),
+      body: _body(listaItems),
       bottomNavigationBar: _bottomNav(),
     );
   }
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 
                 if(lista != null){
                   setState(() {
-                   listItems.add(lista);
+                   cadastrar(lista);
                   });
                 }
                 

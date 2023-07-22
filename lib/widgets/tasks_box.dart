@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:test/controller/task_controller.dart';
 import 'package:test/models/task_items.dart';
+import 'package:test/pages/home_page.dart';
 import 'package:test/util/colors.dart';
 
 class Tasks extends StatefulWidget {
   final TaskItems task;
-
   const Tasks({Key? key, required this.task}) : super (key: key);
 
   @override
@@ -13,6 +14,7 @@ class Tasks extends StatefulWidget {
 
 class _TasksState extends State<Tasks> {
   
+
   @override
   Widget build(BuildContext context) {
     TaskItems task  = widget.task;
@@ -37,7 +39,7 @@ class _TasksState extends State<Tasks> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Pending", style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: danger),),
-              _icons(),
+              _icons(task),
             ],
           )
         ]
@@ -65,7 +67,7 @@ class _TasksState extends State<Tasks> {
             );
   }
   
-  _icons(){
+  _icons(TaskItems task){
     return Wrap(
                 direction: Axis.horizontal,
                 
@@ -85,7 +87,9 @@ class _TasksState extends State<Tasks> {
 
                    IconButton(
                     onPressed: (){
-                      
+                      setState(() {
+                        remover(task);               
+                      });
                     }, 
                     icon: const Icon(Icons.delete, size: 18,)
                   ),// icone de deletar
