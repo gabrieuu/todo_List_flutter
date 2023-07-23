@@ -33,8 +33,8 @@ class _HomePageState extends State<HomePage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Task List", style: TextStyle(color: black),),
-            Text("Add, delete or mark as done a task",style: TextStyle(color: black, fontSize: 11),)
+            Text("Task List", style: TextStyle(color: black, fontSize: 16),),
+            Text("Add, delete or mark as done a task",style: TextStyle(color: black, fontSize: 10),)
           ],
         ),
         elevation: 0.6,

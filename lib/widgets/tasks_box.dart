@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test/controller/task_controller.dart';
 import 'package:test/models/task_items.dart';
-import 'package:test/pages/home_page.dart';
 import 'package:test/util/colors.dart';
 
 class Tasks extends StatefulWidget {
@@ -42,7 +41,7 @@ class _TasksState extends State<Tasks> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Pending", style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: danger),),
+              Text(task.complete ? "Completed" : "Pending", style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: task.complete ? sucess : critical),),
               _icons(task),
             ],
           )
@@ -56,9 +55,23 @@ class _TasksState extends State<Tasks> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(title,style: const TextStyle(fontWeight: FontWeight.w400),),
-              Text(importance.toUpperCase(), style: TextStyle(fontSize: 9, color: danger, fontWeight: FontWeight.bold),) 
+              Text(importance.toUpperCase(), style: TextStyle(fontSize: 9, color: _importanceColor(importance.toLowerCase()), fontWeight: FontWeight.bold),) 
             ],
           );
+  }
+  Color _importanceColor(String importance){
+    if(importance == "low"){
+      return sucess;
+    }
+    else if(importance == "medium"){
+      return warning;
+    }
+    else if(importance == "high"){
+      return danger;
+    }
+    else{
+      return critical;
+    }
   }
   _description({required String description}){
     return Container(
@@ -78,7 +91,11 @@ class _TasksState extends State<Tasks> {
                 children: [
 
                   IconButton(
-                    onPressed: (){}, 
+                    onPressed: (){
+                      setState(() {
+                        task.completar();
+                      });
+                    }, 
                     icon: const Icon(Icons.check, size: 18,),
                     
                   ),
