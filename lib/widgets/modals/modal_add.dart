@@ -141,10 +141,10 @@ class _ShowModalState extends State<ShowModal> {
               onPressed: (){
                 Navigator.pop(context);
               }, 
-              style: const ButtonStyle(
+              style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Colors.white),
-                foregroundColor: MaterialStatePropertyAll(Color.fromRGBO(250, 130, 76, 1)),
-                side: MaterialStatePropertyAll(BorderSide(color: Color.fromRGBO(250, 130, 76, 1)))
+                foregroundColor: MaterialStatePropertyAll(orange),
+                side: MaterialStatePropertyAll(BorderSide(color: orange))
               ),
               child: Text(txt),
             );
@@ -157,8 +157,8 @@ class _ShowModalState extends State<ShowModal> {
                  Navigator.of(context).pop(task);
                }
               }, 
-              style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Color.fromRGBO(250, 130, 76, 1))
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(orange)
               ),
               child: Text(txt),
             );

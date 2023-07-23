@@ -109,7 +109,47 @@ class _TasksState extends State<Tasks> {
                    IconButton(
                     onPressed: (){
                       setState(() {
-                          taskProvider.remover(task);           
+                        
+                        showDialog(
+                          context: context, 
+                          builder: (context) => AlertDialog(
+                            title: const Text("Remover", textAlign: TextAlign.center,style: TextStyle(fontSize: 20),),
+                            content: Text("Essa ação não poderá ser desfeita!", textAlign: TextAlign.center, style: TextStyle(fontSize: 13, color: critical),),
+                            actions: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+
+                                ElevatedButton(
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  }, 
+                                  style: ButtonStyle(
+                                    backgroundColor: const MaterialStatePropertyAll(Colors.white),
+                                    foregroundColor: MaterialStatePropertyAll(orange),
+                                    side: MaterialStatePropertyAll(BorderSide(color: orange))
+                                  ),
+                                  child: const Text("Cancelar")
+                                ),
+                              
+                                ElevatedButton(
+                                  onPressed: (){
+                                    taskProvider.remover(task);
+                                    Navigator.pop(context);
+                                  }, 
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(orange)
+                                  ),
+                                  child: const Text("Confirmar")
+                                ),
+
+                                ],
+                              )
+                                
+                            ],
+                          ),);
+                          
+                          //taskProvider.remover(task);           
                       });
                     }, 
                     icon: const Icon(Icons.delete, size: 18,)
