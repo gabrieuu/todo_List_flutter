@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
       return Padding(       
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
+          
           itemCount: task.listaItems.length,
           itemBuilder: (context, index) => Tasks(task: task.listaItems[index]),         
         ),
