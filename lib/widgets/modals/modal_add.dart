@@ -10,11 +10,13 @@ class ShowModal extends StatefulWidget {
   ShowModal({super.key, this.task});
 
   @override
-  State<ShowModal> createState() => _ShowModalState();
+  State<ShowModal> createState() => _ShowModalState(task: task);
 }
 
 class _ShowModalState extends State<ShowModal> {
   
+  TaskItems? task;
+  _ShowModalState({this.task});
 
    
   String dropValue = '';
@@ -22,7 +24,6 @@ class _ShowModalState extends State<ShowModal> {
   TextEditingController description = TextEditingController();
   String priority = "";
   String? msgErro;
- 
 
   List<String> dropdown = [
     "low",
@@ -32,18 +33,22 @@ class _ShowModalState extends State<ShowModal> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
-    TaskItems? task = widget.task;
-    
     if(task != null){
-        title.text = task.getTitle();
-        description.text = task.getDescription();
-        priority = task.getImportance();
-      
-
+      title.text = task!.title;
+      description.text = task!.description;
+      dropValue = task!.importance;
     }
 
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
     return  Container(
       padding: const EdgeInsets.all(15),
       child: SingleChildScrollView(
@@ -165,14 +170,10 @@ class _ShowModalState extends State<ShowModal> {
     msgErro = null;
       return ElevatedButton(
               onPressed: (){     
-                 if(title.text.isNotEmpty && description.text.isNotEmpty && dropValue.isNotEmpty){                      
+                                      
                   TaskItems task = TaskItems(title: title.text, description: description.text, importance: dropValue);
                   Navigator.of(context).pop(task); 
-                 }else{                   
-                    setState(() {
-                      msgErro = "um dos campos está vazio";
-                    });
-                 }              
+                          
               }, 
               style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(orange)
