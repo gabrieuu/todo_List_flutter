@@ -7,25 +7,12 @@ class TaskProvider extends ChangeNotifier{
   List<TaskItems> listaItems = [];
 
     
-  void cadastrar(TaskItems t){
+  void cadastrar({required TaskItems task, int? index}){
 
-  //buscar todos os elementos
-
-    if(listaItems.isEmpty){
-
-      t.setId(1);
-      listaItems.add(t);
-      notifyListeners();
-
-    } else {
-
-      TaskItems last = listaItems[listaItems.length-1];
-      t.setId(last.getId()!+1);
-      listaItems.add(t);
-      notifyListeners();
-
-    }
-
+    (index != null) ? listaItems[index] = task : listaItems.add(task);  
+    
+    notifyListeners();
+ 
   }
 
   void remover(TaskItems t){

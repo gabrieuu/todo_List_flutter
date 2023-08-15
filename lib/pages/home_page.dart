@@ -51,13 +51,13 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async{
               TaskItems? lista = await showModalBottomSheet<TaskItems>(
                 context: context,                
-                builder: (context) => const ShowModal());   
+                builder: (context) => ShowModal());   
                 
-                if(lista != null){
+              if(lista != null){
                   setState(() {
-                   task.cadastrar(lista);
+                   task.cadastrar(task: lista);
                   });
-                }
+              }
                 
 
               },
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView.builder(
           
           itemCount: task.listaItems.length,
-          itemBuilder: (context, index) => Tasks(task: task.listaItems[index]),         
+          itemBuilder: (context, index) => Tasks(task: task.listaItems[index], index: index,),         
         ),
       );
     }

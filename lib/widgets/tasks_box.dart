@@ -3,10 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:test/controller/task_controller.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
+import 'package:test/widgets/modals/modal_add.dart';
 
 class Tasks extends StatefulWidget {
   final TaskItems task;
-  const Tasks({Key? key, required this.task}) : super (key: key);
+  final int index;
+  const Tasks({Key? key, required this.task, required this.index}) : super (key: key);
 
   @override
   State<Tasks> createState() => _TasksState();
@@ -20,6 +22,8 @@ class _TasksState extends State<Tasks> {
   Widget build(BuildContext context) {
 
     TaskItems task  = widget.task;
+    int index = widget.index;
+
     taskProvider = Provider.of<TaskProvider>(context);
 
     return Card(
@@ -38,7 +42,7 @@ class _TasksState extends State<Tasks> {
 
               children: [
                 Text(task.complete ? "Completed" : "Pending", style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: task.complete ? sucess : critical),),
-                _icons(task),
+                _icons(task, index),
               ],
             )
           ]
@@ -84,7 +88,7 @@ class _TasksState extends State<Tasks> {
             );
   }
   
-  _icons(TaskItems task){
+  _icons(TaskItems task, int index){
     return Wrap(
                direction: Axis.horizontal,
                 children: [
@@ -104,7 +108,9 @@ class _TasksState extends State<Tasks> {
 
                    IconButton(
                     splashRadius: 15,
-                    onPressed: (){}, 
+                    onPressed: () async {
+                       await editTask(task: task, index: index);
+                    }, 
                     icon: const Icon(Icons.edit, size: 18,)
                   ),//icone de editar
 
@@ -166,6 +172,19 @@ class _TasksState extends State<Tasks> {
                   
                 ],
               );
+  }
+
+  Future<void> editTask({required TaskItems task, required int index}) async{
+    TaskItems? taskEditingItem = await showModalBottomSheet<TaskItems>(
+      context: context,
+      builder: (context) => ShowModal(task: task,),
+    );
+    if(taskEditingItem != null){      
+        taskProvider.cadastrar(task: taskEditingItem, index: index);     
+    }
+
+
+
   }
 }
 

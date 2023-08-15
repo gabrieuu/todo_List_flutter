@@ -1,11 +1,13 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
 
 class ShowModal extends StatefulWidget {
- 
-
-  const ShowModal({super.key});
+  
+  TaskItems? task;
+  ShowModal({super.key, this.task});
 
   @override
   State<ShowModal> createState() => _ShowModalState();
@@ -13,10 +15,14 @@ class ShowModal extends StatefulWidget {
 
 class _ShowModalState extends State<ShowModal> {
   
+
+   
   String dropValue = '';
-  String title = '';
-  String description = '';
-  String priority = '';
+  TextEditingController title = TextEditingController();
+  TextEditingController description = TextEditingController();
+  String priority = "";
+  String? msgErro;
+ 
 
   List<String> dropdown = [
     "low",
@@ -24,9 +30,20 @@ class _ShowModalState extends State<ShowModal> {
     "high",
     "critical"
   ];
-  
+
   @override
   Widget build(BuildContext context) {
+
+    TaskItems? task = widget.task;
+    
+    if(task != null){
+        title.text = task.getTitle();
+        description.text = task.getDescription();
+        priority = task.getImportance();
+      
+
+    }
+
     return  Container(
       padding: const EdgeInsets.all(15),
       child: SingleChildScrollView(
@@ -39,6 +56,7 @@ class _ShowModalState extends State<ShowModal> {
             _txtFieldTitle(label: "Title"),
             _txtFieldDesc(label: "Description"),
             _dropdown(),
+            Center(child: Text(msgErro ?? "", style: TextStyle(color: critical),)),
             Row(
               
               children: [
@@ -46,7 +64,7 @@ class _ShowModalState extends State<ShowModal> {
                 const SizedBox(width: 10,),
                 Expanded(child: _buttonAdd(txt: "ADD", cor: Colors.orange),)
               ],
-            )
+            ),
             
             
           ],
@@ -64,10 +82,10 @@ class _ShowModalState extends State<ShowModal> {
           )),
         DropdownButton<String>(
             hint: const Text("Selecione"),
-            value: (dropValue.isEmpty) ? null : dropValue,
+            value: dropValue.isNotEmpty ? dropValue : null,
             onChanged: (resposta){
               setState(() {
-                dropValue = resposta.toString();
+                dropValue = resposta!;
               });
             },
             items: dropdown.map((drop) => DropdownMenuItem(
@@ -76,11 +94,13 @@ class _ShowModalState extends State<ShowModal> {
 
               )).toList(),
             underline: Container(),
+            
             isExpanded: true,
             borderRadius: BorderRadius.circular(10),
             focusColor: backgroundColor,
             padding: const EdgeInsets.symmetric(horizontal: 10),
             style: TextStyle(fontSize: 12, color: black),
+            
             
           ),
       ],
@@ -102,11 +122,7 @@ class _ShowModalState extends State<ShowModal> {
                   floatingLabelStyle: const TextStyle(color: Colors.red),
                   floatingLabelAlignment: FloatingLabelAlignment.start,
                 ),
-                onChanged: (resul){
-                  setState(() {
-                    title = resul;
-                  });
-                },
+                controller: title,
               ),
       ],
     );
@@ -127,11 +143,7 @@ class _ShowModalState extends State<ShowModal> {
                   floatingLabelStyle: const TextStyle(color: Colors.red),
                   floatingLabelAlignment: FloatingLabelAlignment.start,
                 ),
-                onChanged: (resul){
-                  setState(() {
-                    description = resul;
-                  });
-                },
+                controller: description,
               ),
       ],
     );
@@ -150,12 +162,17 @@ class _ShowModalState extends State<ShowModal> {
             );
   }
   _buttonAdd({String txt = '', Color cor = Colors.black}){
+    msgErro = null;
       return ElevatedButton(
-              onPressed: (){
-               if(title.isNotEmpty && description.isNotEmpty && dropValue.isNotEmpty){
-                 TaskItems task = TaskItems(title: title, description: description, importance: dropValue);
-                 Navigator.of(context).pop(task);
-               }
+              onPressed: (){     
+                 if(title.text.isNotEmpty && description.text.isNotEmpty && dropValue.isNotEmpty){                      
+                  TaskItems task = TaskItems(title: title.text, description: description.text, importance: dropValue);
+                  Navigator.of(context).pop(task); 
+                 }else{                   
+                    setState(() {
+                      msgErro = "um dos campos está vazio";
+                    });
+                 }              
               }, 
               style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(orange)
