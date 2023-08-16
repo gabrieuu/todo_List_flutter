@@ -1,28 +1,24 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:test/models/task_items.dart';
 import 'package:test/util/colors.dart';
 
 class ShowModal extends StatefulWidget {
   
-  TaskItems? task;
-  ShowModal({super.key, this.task});
+  final TaskItems? task;
+  const ShowModal({super.key, this.task});
 
   @override
-  State<ShowModal> createState() => _ShowModalState(task: task);
+  State<ShowModal> createState() => _ShowModalState();
 }
 
 class _ShowModalState extends State<ShowModal> {
   
   TaskItems? task;
-  _ShowModalState({this.task});
 
    
   String dropValue = '';
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
-  String priority = "";
   String? msgErro;
 
   List<String> dropdown = [
@@ -31,16 +27,16 @@ class _ShowModalState extends State<ShowModal> {
     "high",
     "critical"
   ];
-
+  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    if(task != null){
-      title.text = task!.title;
-      description.text = task!.description;
-      dropValue = task!.importance;
+    if(widget.task != null){
+      title.text = widget.task!.getTitle();
+      description.text = widget.task!.getDescription();
+      dropValue = widget.task!.getImportance();
     }
 
 

@@ -90,8 +90,9 @@ class _HomePageState extends State<HomePage> {
   _bottomNav(){
     return Container(
       height: 70,
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       alignment: Alignment.topCenter,
+      
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -101,15 +102,12 @@ class _HomePageState extends State<HomePage> {
             color: Color.fromRGBO(0, 0, 0, 0.2),
           )
         ],
+        
       ),
-
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Icon(Icons.task),
-          Icon(Icons.notifications_outlined)
-        ],
-      ),
+      
+      child: Center(
+        child: Icon(Icons.task)
+        ),
     );
   }
 }
